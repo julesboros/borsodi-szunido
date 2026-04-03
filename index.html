@@ -7,11 +7,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=4">
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="app.js" defer></script>
+  <script src="app.js?v=4" defer></script>
 </head>
 <body>
 
@@ -193,6 +193,10 @@
         <article class="card" data-tags="nap kirandulas" data-weather="nap">
           <div class="card-badge badge-green">Közel · 8–15 km</div>
           <div class="card-icon-row">🌊</div>
+          <div class="card-gallery">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Upponyi-szoros_B%C3%BCkk.jpg/800px-Upponyi-szoros_B%C3%BCkk.jpg" alt="Upponyi-szoros" class="gallery-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Uppony_view.jpg/800px-Uppony_view.jpg" alt="Kilátás az Upponyi-hegységre" class="gallery-item">
+          </div>
           <h3 class="card-title">Upponyi-szoros túra</h3>
           <div class="card-meta-row">
             <span class="card-chip">10 km</span>
@@ -223,6 +227,9 @@
         <article class="card" data-tags="nap kirandulas ritka" data-weather="nap">
           <div class="card-badge badge-amber">Kevéssé ismert · 15 km</div>
           <div class="card-icon-row">🌿</div>
+          <div class="card-gallery">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Csondr%C3%B3-v%C3%B6lgy_v%C3%ADzes%C3%A9s.jpg/800px-Csondr%C3%B3-v%C3%B6lgy_v%C3%ADzes%C3%A9s.jpg" alt="Csondró-völgy" class="gallery-item">
+          </div>
           <h3 class="card-title">Csondró-völgy – Tardona / Mályinka</h3>
           <div class="card-meta-row">
             <span class="card-chip">10 km</span>
@@ -249,6 +256,9 @@
         <article class="card" data-tags="nap valtozekony pihi helyi" data-weather="nap valtozekony pihi">
           <div class="card-badge badge-green">Helyi · 2 km</div>
           <div class="card-icon-row">🏞️</div>
+          <div class="card-gallery">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/L%C3%A1zb%C3%A9rci-v%C3%ADzt%C3%A1roz%C3%B3_fel%C3%BCln%C3%A9zetb%C5%91l.jpg/800px-L%C3%A1zb%C3%A9rci-v%C3%ADzt%C3%A1roz%C3%B3_fel%C3%BCln%C3%A9zetb%C5%91l.jpg" alt="Lázbérc 1" class="gallery-item">
+          </div>
           <h3 class="card-title">Lázbérci-víztározó körséta</h3>
           <div class="card-meta-row">
             <span class="card-chip">3–4 km</span>
@@ -268,7 +278,9 @@
             </div>
           </div>
           <div class="card-eat">🍽 <strong>Étkezés:</strong> Aranykehely Fogadó – 2026 tavaszi ajánlat: Dédi töltött szelet</div>
-          <button class="btn-save" onclick="toggleFavorite('repas-volgy')">⭐ Mentés</button>
+          <div class="card-footer">
+            <button class="btn-save" onclick="toggleFavorite('lazberci-seta')">⭐ Mentés</button>
+          </div>
         </article>
 
       </div>
@@ -488,6 +500,9 @@
         <article class="card" data-tags="nap pihi ritka" data-weather="nap pihi">
           <div class="card-badge badge-amber">Kevéssé ismert · 30 km</div>
           <div class="card-icon-row">🌾</div>
+          <div class="card-gallery">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Repas_Valley_Bukk.jpg/800px-Repas_Valley_Bukk.jpg" alt="Répás-völgy" class="gallery-item">
+          </div>
           <h3 class="card-title">Répás-völgyi tanösvény – Domaháza</h3>
           <div class="card-meta-row">
             <span class="card-chip">2,3 km</span>
@@ -651,10 +666,8 @@
         
         <!-- RESTAURANT 1: Aranykehely -->
         <article class="restaurant-card-v2">
-          <div class="rest-image-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-              <path d="M12 2L15 8H9L12 2Z M5 22H19 M7 22V11C7 9 9 7 12 7C15 7 17 9 17 11V22 M12 12V17" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+          <div class="rest-image-box">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/D%C3%A9destapolcs%C3%A1ny_Aranykehely.jpg/800px-D%C3%A9destapolcs%C3%A1ny_Aranykehely.jpg" alt="Aranykehely Fogadó" class="rest-photo">
           </div>
           <div class="rest-content">
             <div class="rest-header">
@@ -708,11 +721,8 @@
 
         <!-- RESTAURANT 3: Szilvásvárad Szalajka -->
         <article class="restaurant-card-v2">
-          <div class="rest-image-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-              <path d="M2 12C2 12 5 7 12 7C19 7 22 12 22 12C22 12 19 17 12 17C5 17 2 12 2 12Z" stroke-linecap="round"/>
-              <path d="M12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z" stroke-linecap="round"/>
-            </svg>
+          <div class="rest-image-box">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Szilv%C3%A1sv%C3%A1rad_Szalajka-v%C3%B6lgy_étterem.jpg/800px-Szilv%C3%A1sv%C3%A1rad_Szalajka-v%C3%B6lgy_%C3%A9tterem.jpg" alt="Szalajka Fogadó" class="rest-photo">
           </div>
           <div class="rest-content">
             <div class="rest-header">
@@ -737,10 +747,8 @@
 
         <!-- RESTAURANT 4: Lillafüred Pisztrángos -->
         <article class="restaurant-card-v2">
-          <div class="rest-image-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-              <path d="M7 2L17 2L21 8L12 22L3 8L7 2Z" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+          <div class="rest-image-box">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Lillaf%C3%BCred_Pisztr%C3%A1ngos.jpg/800px-Lillaf%C3%BCred_Pisztr%C3%A1ngos.jpg" alt="Pisztrángos" class="rest-photo">
           </div>
           <div class="rest-content">
             <div class="rest-header">
@@ -765,11 +773,8 @@
 
         <!-- RESTAURANT 5: Kazincbarcika HBH -->
         <article class="restaurant-card-v2">
-          <div class="rest-image-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-              <rect x="6" y="3" width="12" height="18" rx="2" stroke-linecap="round"/>
-              <path d="M18 7H20C21.1046 7 22 7.89543 22 9V11C22 12.1046 21.1046 13 20 13H18" stroke-linecap="round"/>
-            </svg>
+          <div class="rest-image-box">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Kazincbarcika_HBH.jpg/800px-Kazincbarcika_HBH.jpg" alt="HBH Sörház" class="rest-photo">
           </div>
           <div class="rest-content">
             <div class="rest-header">
@@ -794,12 +799,8 @@
 
         <!-- RESTAURANT 6: Miskolctapolca Kemencés -->
         <article class="restaurant-card-v2">
-          <div class="rest-image-placeholder">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
-              <path d="M17 18V21M7 18V21" stroke-linecap="round"/>
-              <path d="M4 14C4 9.58172 7.58172 6 12 6C16.4183 6 20 9.58172 20 14V18H4V14Z" stroke-linecap="round"/>
-              <path d="M9 11C9 11 10 10 12 10C14 10 15 11 15 11" stroke-linecap="round"/>
-            </svg>
+          <div class="rest-image-box">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Miskolctapolca_Restaurant.jpg/800px-Miskolctapolca_Restaurant.jpg" alt="Kemencés Kisvendéglő" class="rest-photo">
           </div>
           <div class="rest-content">
             <div class="rest-header">
@@ -867,11 +868,9 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <p>Borsodi Szünidő · Április 2026 · Kazincbarcika & Dédestapolcsány körzete</p>
-      <p class="footer-sub">Minden program szabadon kombinálható — az időjárás dönt!</p>
+      <p class="footer-sub">Minden program szabadon kombinálható — az időjárás dönt! <span class="v-badge">v4.0 Final</span></p>
     </div>
   </footer>
-
-  <script src="app.js"></script>
 <script data-pplx-inline-edit>
 (function(){
   if(window===window.top)return;
