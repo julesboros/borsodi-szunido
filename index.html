@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="hu" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Borsodi Szünidő – Programtárunk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-label="Borsodi Szünidő" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="17" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M10 24 Q14 14 18 18 Q22 22 26 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <circle cx="18" cy="10" r="3" fill="currentColor" opacity="0.3"/>
+          <path d="M15 10 Q18 6 21 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        </svg>
+        <span>Borsodi Szünidő</span>
+      </div>
+      <div class="header-right">
+        <nav class="jump-nav">
+          <a href="#dontes">Döntési segéd</a>
+          <a href="#programok">Programok</a>
+          <a href="#wellness">Wellness</a>
+          <a href="#tura">Túrák</a>
+          <a href="#ettermek">Étkezés</a>
+        </nav>
+        <button data-theme-toggle aria-label="Téma váltás" class="theme-toggle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="hero-tag">Április 7–11 · Borsod-Abaúj-Zemplén</p>
+      <h1 class="hero-title">Öt nap a Bükk <em>szívében</em></h1>
+      <p class="hero-sub">Kazincbarcika & Dédestapolcsány körzetéből fedezzük fel a vidéket. A napok sorrendje szabad — reggel az időjárás dönt.</p>
+      <div class="hero-meta">
+        <span class="meta-pill">🌡 12–18°C napközben</span>
+        <span class="meta-pill">🌲 Bükki Nemzeti Park</span>
+        <span class="meta-pill">👨‍👩‍👧 3 fős kirándulás</span>
+        <span class="meta-pill">🚗 Autóval</span>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">↓</div>
+  </section>
+
+  <!-- DÖNTÉSI SEGÉD -->
+  <section class="section" id="dontes">
+    <div class="container">
+      <h2 class="section-title">Reggeli döntési segéd</h2>
+      <p class="section-sub">Nézd meg az időjárást, és válassz az alábbi típusok közül:</p>
+      <div class="decision-grid">
+        <div class="decision-card" data-filter="nap">
+          <div class="decision-icon">☀️</div>
+          <div class="decision-label">Napos, 15°C+</div>
+          <div class="decision-tags">
+            <span>Vártúra</span><span>Uppony-szoros</span><span>Szalajka-völgy</span>
+          </div>
+          <button class="decision-btn" onclick="filterCards('nap')">Ezeket mutasd</button>
+        </div>
+        <div class="decision-card" data-filter="valtozekony">
+          <div class="decision-icon">⛅</div>
+          <div class="decision-label">Változékony</div>
+          <div class="decision-tags">
+            <span>Bogács termál</span><span>Lillafüred barlang</span>
+          </div>
+          <button class="decision-btn" onclick="filterCards('valtozekony')">Ezeket mutasd</button>
+        </div>
+        <div class="decision-card" data-filter="eso">
+          <div class="decision-icon">🌧️</div>
+          <div class="decision-label">Esős nap</div>
+          <div class="decision-tags">
+            <span>Barlangfürdő</span><span>Lillafüred + barlang</span>
+          </div>
+          <button class="decision-btn" onclick="filterCards('eso')">Ezeket mutasd</button>
+        </div>
+        <div class="decision-card" data-filter="pihi">
+          <div class="decision-icon">💆</div>
+          <div class="decision-label">Laza, pihenős</div>
+          <div class="decision-tags">
+            <span>Tósétány</span><span>Bogács félnap</span>
+          </div>
+          <button class="decision-btn" onclick="filterCards('pihi')">Ezeket mutasd</button>
+        </div>
+      </div>
+      <div class="filter-reset" id="filterReset" style="display:none">
+        <button onclick="filterCards('osszes')" class="btn-reset">← Összes program mutatása</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMKÁRTYÁK -->
+  <section class="section section-alt" id="programok">
+    <div class="container">
+      <h2 class="section-title">Programblokkok</h2>
+      <p class="section-sub">Minden blokk önálló — bármely napra beilleszthető</p>
+      <div class="cards-grid" id="cardsGrid">
+
+        <!-- KÁRTYA 1: Dédesi vár -->
+        <article class="card" data-tags="nap kiraндulas helyi" data-weather="nap">
+          <div class="card-badge badge-green">Helyi · 0–12 km</div>
+          <div class="card-icon-row">🏰</div>
+          <div class="card-gallery">
+            <img src="https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=800" alt="Bükk 1" class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=800" alt="Bükk 2" class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=800" alt="Bükk 3" class="gallery-item">
+          </div>
+          <h3 class="card-title">Dédesi vár + Verepce-bérci tanösvény</h3>
+          <div class="card-meta-row">
+            <span class="card-chip">11 km</span>
+            <span class="card-chip">4–6 óra</span>
+            <span class="card-chip">Közepes</span>
+            <span class="card-chip weather-chip">☀️ Csak szép időre</span>
+          </div>
+          <p class="card-desc">Zöld bástya jelzésű körtúra. Középkori várrom 589 m magasban, Magyarország legnagyobb őskorierőd-nyomai (140 ha), panoráma a Bálványra. Ha rövidebb kell: csak a várig oda-vissza ~4 km.</p>
+          <div class="card-detail">
+            <div class="card-detail-row">
+              <span class="detail-label">Kiindulás</span>
+              <span>Dédestapolcsány</span>
+            </div>
+            <div class="card-detail-row">
+              <span class="detail-label">Parkoló</span>
+              <span>Ingyenes, falunál</span>
+            </div>
+            <div class="card-detail-row">
+              <span class="detail-label">Belépő</span>
+              <span>Ingyenes</span>
+            </div>
+          </div>
+          <div class="card-eat">🍽 <strong>Étkezés:</strong> Aranykehely Fogadó (Szarvaspörkölt, Dédi szelet)</div>
+          <a href="https://www.bnpi.hu/hu/tura/nagyvisnyo-dedestapolcsany-verepce-berci-tanosveny" target="_blank" class="card-link">Részletek →</a>
+        </article>
+
+        <!-- KÁRTYA 2: Szalamandra tanösvény -->
+        <article class="card" data-tags="nap valtozekony pihi helyi" data-weather="nap valtozekony pihi">
+          <div class="card-badge badge-green">Helyi · 2–13 km</div>
+          <div class="card-icon-row">🦎</div>
+          <h3 class="card-title">Szalamandra tanösvény – Lázbérci tó</h3>
+          <div class="card-meta-row">
+            <span class="card-chip">6 km</span>
+            <span class="card-chip">2–2,5 óra</span>
+            <span class="card-chip">Könnyű</span>
+            <span class="card-chip weather-chip">⛅ Bármely időben</span>
+          </div>
+          <p class="card-desc">Jelzett tanösvény a Lázbérci-víztározó mentén — részben tópart, részben sűrű erdő. Tavasszal szalamandrákat lehet látni a patak közelében. Szinte ismeretlen, csendes útvonal.</p>
+          <div class="card-detail">
+            <div class="card-detail-row">
+              <span class="detail-label">Kiindulás</span>
+              <span>Dédestapolcsány (tópartnál)</span>
+            </div>
+            <div class="card-detail-row">
+              <span class="detail-label">Jelzés</span>
+              <span>Sárga/fekete</span>
+            </div>
+            <div class="card-detail-row">
+              <span class="detail-label">Szintemelkedés</span>
+              <span>200 m</span>
+            </div>
+          </div>
+          <div class="card-eat">🍽 <strong>Étkezés:</strong> Aranykehely Fogadó (Közeli, házias)</div>
+        </article>
+
+        <!-- KÁRTYA 3: Uppony-szoros -->
+        <article class="card" data-tags="nap kirandulas" data-weather="nap">
+          <div class="card-badge badge-green">Közel · 8–15 km</div>
+          <div class="card-icon-row">🌊</div>
+          <h3 class="card-title">Upponyi-szoros túra</h3>
+          <div class="card-meta-row">
+            <span class="card-chip">10 km</span>
+            <span class="card-chip">3–4 óra</span>
+            <span class="card-chip">Könnyű–közepes</span>
+            <span class="card-chip weather-chip">☀️ Szép időre</span>
+          </div>
+          <p class="card-desc">Magyarország egyik legnagyobb szurdokvölgye — 170 m magas mészkősziklafalak, Csernely-patak, jégkorszaki barlangnyomok. Gyereknek kimondottan kalandos és látványos. Uppony faluból indul.</p>
+          <div class="card-detail">
+            <div class="card-detail-row">
+              <span class="detail-label">Útvonal</span>
+              <span>Uppony → szoros → víztározó → Kalica-tető → vissza</span>
+            </div>
+            <div class="card-detail-row">
+              <span class="detail-label">Szintemelkedés</span>
+              <span>350 m</span>
+            </div>
+            <div class="card-detail-row">
+              <span class="detail-label">Belépő</span>
+              <span>Ingyenes</span>
+            </div>
+          </div>
+          <div class="card-eat">🍽 <strong>Étkezés:</strong> Csomagolt étel ajánlott / Kazincbarcika HBH Bajor Sörház</div>
+          <a href="https://csodahelyek.hu/2020/11/15/obukk-upponyi-hegyseg-tura/" target="_blank" class="card-link">Részletek →</a>
+        </article>
+
+        <!-- KÁRTYA 4: Csondró-völgy -->
+        <article class="card" data-tags="nap kirandulas ritka" data-weather="nap">
+          <div class="card-badge badge-amber">Kevéssé ismert · 15 km</div>
+          <div class="card-icon-row">🌿</div>
+          <h3 class="card-title">Csondró-völgy – Tardona / Mályinka</h3>
+          <div class="card-meta-row">
+            <span class="card-chip">10 km</span>
+            <span class="card-chip">3–4 óra</span>
+            <span class="card-chip">Könnyű–közepes</span>
+            <span class="card-chip weather-chip">☀️ Szép időre</span>
+          </div>
+          <p class="card-desc">A Bükk egyik legjobban őrzött titka. Mályinka és Szentlélek között húzódik, a „Kohászúton". A Csondró-patak mélyen bevágódott szurdokában apró vízesések sorakoznak. Szinte senki sem jár erre.</p>
+          <div class="card-detail">
+            <div class="card-detail-row">
+              <span class="detail-label">Útvonal</span>
+              <span>Tardona → Odvas-kő → Cakó-kő → Csondró-völgy → Mályinka</span>
+            </div>
+            <div class="card-detail-row">
+              <span class="detail-label">Szintemelkedés</span>
+              <span>350 m</span>
+            </div>
+          </div>
+          <div class="card-eat">🍽 <strong>Étkezés:</strong> Mályinka Gombász büfé (ha nyitva) / Aranykehely (Dédestapolcsány)</div>
+          <a href="https://csodahelyek.hu/2022/03/29/csondro-volgy-tardona/" target="_blank" class="card-link">Részletek →</a>
+        </article>
+
+        <!-- KÁRTYA 5: Lázbérci tósétány -->
+        <article class="card" data-tags="nap valtozekony pihi helyi" data-weather="nap valtozekony pihi">
+          <div class="card-badge badge-green">Helyi · 2 km</div>
+          <div class="card-icon-row">🏞️</div>
+          <h3 class="card-title">Lázbérci-víztározó körséta</h3>
+          <div class="card-meta-row">
+            <span class="card-chip">3–4 km</span>
+            <span class="card-chip">1,5–2 óra</span>
+            <span class="card-chip">Nagyon könnyű</span>
+            <span class="card-chip weather-chip">⛅ Bármely időben</span>
+          </div>
+          <p class="card-desc">Kellemes, pihentető körséta a víztározó partján. Panoráma a Bükk északi vonulatára, tükrös víz, horgászhely. Tökéletes program érkezés vagy indulás napján, vagy pihenős félnapként.</p>
+          <div class="card-detail">
+            <div class="card-detail-row">
+              <span class="detail-label">Kiindulás</span>
+              <span>Dédestapolcsány, tóparknál</span>
+            </div>
+            <div class="card-detail-row">
+              <span class="detail-label">Belépő</span>
+              <span>Ingyenes</span>
+            </div>
+          </div>
+          <div class="card-eat">🍽 <strong>Étkezés:</strong> Aranykehely Fogadó – 2026 tavaszi ajánlat: Dédi töltött szelet</div>
+        </article>
+
+        <!-- KÁRTYA 6: Szalajka-völgy -->
+        <article class="card" data-tags="nap valtozekony kirandulas" data-weather="nap valtozekony">
+          <div class="card-badge badge-blue">Kirándulás · 40–45 km</div>
+          <div class="card-icon-row">🌲</div>
+          <div class="card-gallery">
+            <img src="https://images.unsplash.com/photo-1590766940554-634a7ed41450?q=80&w=800" alt="Szilvásvárad 1" class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1505833115364-e2cadcba657a?q=80&w=800" alt="Lipicai" class="gallery-item">
+          </div>
+          <h3 class="card-title">Szalajka-völgy + lipicai lovak (Szilvásvárad)</h3>
+          <div class="btn-live">
+            <div class="live-dot"></div>
+            <a href="https://www.idokep.hu/webkamera/szilvasvarad" target="_blank" style="color:inherit">Élő webkamera (Szilvásvárad)</a>
+          </div>
+          <div class="card-meta-row">
+            <span class="card-chip">7–10 km</span>
+            <span class="card-chip">4–5 óra</span>
+            <span class="card-chip">Könnyű</span>
+            <span class="card-chip weather-chip">⛅ Enyhe esőben is</span>
+          </div>
+          <p class="card-desc">A Bükki Nemzeti Park ékköve. Szalajka-patak, Fátyol-vízesés (kötelező!), pisztrángos tavak, erdei kisvasút. Odafelé gyalog, visszafelé vonattal ajánlott. Lipicai lovas bemutató Szilvásváradon.</p>
+          <div class="card-detail">
+            <div class="card-detail-row">
+              <span class="detail-label">Parkoló</span>
+              <span>Szilvásvárad bejáratánál</span>
+            </div>
+            <div class="card-detail-row">
+              <span class="detail-label">Erdei vasút jegy</span>
+              <span>~1.000–1.500 Ft/fő</span>
+            </div>
+          </div>
+          <div class="card-eat">🍽 <strong>Étkezés:</strong> Szalajka Fogadó Étterem – 2026 tavaszi specialitás: Fokhagymás sült pisztráng</div>
+          <a href="https://lacontessa.hu/elmenyek/szilvasvaradi-latnivalok-es-programok/" target="_blank" class="card-link">Részletek →</a>
+        </article>
+
+        <!-- KÁRTYA 7: Lillafüred -->
+        <article class="card" data-tags="eso valtozekony kirandulas" data-weather="eso valtozekony">
+          <div class="card-badge badge-blue">Kirándulás · 45 km</div>
+          <div class="card-icon-row">🏛️</div>
+          <div class="card-gallery">
+            <img src="https://images.unsplash.com/photo-1627435133642-127976239121?q=80&w=800" alt="Lillafüred" class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1621274104771-331666e8f496?q=80&w=800" alt="Hámori tó" class="gallery-item">
+          </div>
+          <h3 class="card-title">Lillafüred – barlangok, tó, kisvasút</h3>
+          <div class="btn-live">
+            <div class="live-dot"></div>
+            <a href="https://www.idokep.hu/webkamera/zsofia_kilato" target="_blank" style="color:inherit">Élő webkamera (Lillafüred)</a>
+          </div>
+          <div class="card-meta-row">
+            <span class="card-chip">3–4 óra</span>
+            <span class="card-chip">Könnyű</span>
+            <span class="card-chip weather-chip">🌧️ Esős napra is!</span>
+          </div>
+          <p class="card-desc">István-barlang + Anna-barlang (egész évben nyitva). Hámori-tó csónakázás. Lillafüredi erdei kisvasút. Újmassai őskohó (10 perces kitérő). Esős nap tökéletes mentőprogramja.</p>
+          <div class="card-detail">
+            <div class="card-detail-row">
+              <span class="detail-label">Barlang belépő</span>
+              <span>Felnőtt ~2.500 Ft | Gyerek ~1.500 Ft</span>
+            </div>
+            <div class="card-detail-row">
+              <span class="detail-label">Nyitva</span>
+              <span>Egész évben</span>
+            </div>
+          </div>
+          <div class="card-eat">🍽 <strong>Étkezés:</strong> Vendéglő a Pisztrángoshoz (Autentikus sült hal) / Mátyás Étterem (Elegáns)</div>
+        </article>
+
+        <!-- KÁRTYA 8: Bogács termál -->
+        <article class="card" data-tags="eso valtozekony pihi wellness" data-weather="eso valtozekony pihi">
+          <div class="card-badge badge-teal">Wellness · 35 km</div>
+          <div class="card-icon-row">♨️</div>
+          <h3 class="card-title">Bogácsi Termálfürdő</h3>
+          <div class="card-meta-row">
+            <span class="card-chip">2–4 óra</span>
+            <span class="card-chip">Minden korosztálynak</span>
+            <span class="card-chip weather-chip">🌧️ Esős napra is!</span>
+          </div>
+          <p class="card-desc">Termálvíz, gyógymedence, fedett beltéri medence (egész évben), gyerekmedence. Finn szauna. Masszázs 3.300–5.800 Ft/alkalom. Kombinálható délelőtti túrával. SZÉP kártyával fizethető.</p>
+          <div class="card-detail">
+            <div class="card-detail-row">
+              <span class="detail-label">Cím</span>
+              <span>Bogács, Fürdő u. 2.</span>
+            </div>
+            <div class="card-detail-row">
+              <span class="detail-label">Nyitva</span>
+              <span>8:00–20:00, egész évben</span>
+            </div>
+            <div class="card-detail-row">
+              <span class="detail-label">SZÉP kártya</span>
+              <span>✓ Elfogadják</span>
+            </div>
+          </div>
+          <div class="card-eat">🍽 <strong>Étkezés:</strong> Strand Hotel étterem / Vadvirág Étterem (Helyi specialitások)</div>
+        </article>
+
+        <!-- KÁRTYA 9: Barlangfürdő -->
+        <article class="card" data-tags="eso valtozekony wellness" data-weather="eso valtozekony">
+          <div class="card-badge badge-teal">Wellness · 38 km</div>
+          <div class="card-icon-row">💧</div>
+          <h3 class="card-title">Miskolc-Tapolca Barlangfürdő</h3>
+          <div class="card-meta-row">
+            <span class="card-chip">3–6 óra</span>
+            <span class="card-chip">Minden korosztálynak</span>
+            <span class="card-chip weather-chip">🌧️ Esős nap főprogramja!</span>
+          </div>
+          <p class="card-desc">Európában egyedülálló természetes barlangfürdő. Állandó 30°C-os víz barlangos medencékben. Csillagterem, vadvíz masszázs, finn szauna, gőzkabinok, infraszauna. Halpedikűr, aquafitness.</p>
+          <div class="card-detail">
+            <div class="card-detail-row">
+              <span class="detail-label">Belépő felnőtt</span>
+              <span>~3.500–4.500 Ft</span>
+            </div>
+            <div class="card-detail-row">
+              <span class="detail-label">Nyitva</span>
+              <span>9:00–20:00</span>
+            </div>
+            <div class="card-detail-row">
+              <span class="detail-label">SZÉP kártya</span>
+              <span>✓ Elfogadják</span>
+            </div>
+          </div>
+          <div class="card-eat">🍽 <strong>Étkezés:</strong> Kemencés Kisvendéglő (Miskolctapolca legnépszerűbbje 2026-ban)</div>
+          <a href="https://barlangfurdo.hu" target="_blank" class="card-link">barlangfurdo.hu →</a>
+        </article>
+
+        <!-- KÁRTYA 10: La Contessa -->
+        <article class="card" data-tags="eso valtozekony wellness" data-weather="eso valtozekony">
+          <div class="card-badge badge-teal">Wellness · 45 km</div>
+          <div class="card-icon-row">🏯</div>
+          <h3 class="card-title">La Contessa Kastélyhotel – Szilvásvárad</h3>
+          <div class="card-meta-row">
+            <span class="card-chip">Félnap–egész nap</span>
+            <span class="card-chip">Kastélyszintű élmény</span>
+            <span class="card-chip weather-chip">⛅ Bármely időben</span>
+          </div>
+          <p class="card-desc">Neobarokk kastély 7 hektáros őspark közepén. 93 m²-es beltéri úszómedence, 6 személyes jakuzzi (38°C), finn szauna, bioszauna, aromakabin, gőzkamra, hammam, jégkút. Kétszemélyes hydromasszázs-kád fény- és hangterápiával.</p>
+          <div class="card-detail">
+            <div class="card-detail-row">
+              <span class="detail-label">Kombináció</span>
+              <span>Szalajka-völggyel – ugyanabban a faluban!</span>
+            </div>
+          </div>
+          <div class="card-eat">🍽 <strong>Étkezés:</strong> Erzsébet Étterem / Cyrano Drinkbár (fürdőköntösben is beülhetsz)</div>
+          <a href="https://lacontessa.hu" target="_blank" class="card-link">lacontessa.hu →</a>
+        </article>
+
+        <!-- KÁRTYA 11: Bambara -->
+        <article class="card" data-tags="eso valtozekony wellness" data-weather="eso valtozekony">
+          <div class="card-badge badge-teal">Wellness · 55 km</div>
+          <div class="card-icon-row">🦒</div>
+          <h3 class="card-title">Bambara Hotel Premium – Felsőtárkány</h3>
+          <div class="card-meta-row">
+            <span class="card-chip">Egész napos</span>
+            <span class="card-chip">Afrika-stílus, erdei</span>
+            <span class="card-chip weather-chip">⛅ Bármely időben</span>
+          </div>
+          <p class="card-desc">Erdei wellness hotel Eger közelében. 3 medence, jakuzzi, hammam, finn szauna, felnőtt-only Sahel wellness szint. Gyerekeknek: szurikátapark, labirintus, játszószoba. TripAdvisor 4.5★ (293 vélemény).</p>
+          <div class="card-detail">
+            <div class="card-detail-row">
+              <span class="detail-label">Cím</span>
+              <span>Felsőtárkány, Bükkerdő sétány 2-4.</span>
+            </div>
+          </div>
+          <div class="card-eat">🍽 <strong>Étkezés:</strong> Bambara Restaurant (afrikai és nemzetközi fogások)</div>
+          <a href="https://bambara.com-hotel.website" target="_blank" class="card-link">Részletek →</a>
+        </article>
+
+        <!-- KÁRTYA 12: Répás-völgyi tanösvény -->
+        <article class="card" data-tags="nap pihi ritka" data-weather="nap pihi">
+          <div class="card-badge badge-amber">Kevéssé ismert · 30 km</div>
+          <div class="card-icon-row">🌾</div>
+          <h3 class="card-title">Répás-völgyi tanösvény – Domaháza</h3>
+          <div class="card-meta-row">
+            <span class="card-chip">2,3 km</span>
+            <span class="card-chip">~2 óra</span>
+            <span class="card-chip">Séta szintű</span>
+            <span class="card-chip weather-chip">⛅ Bármely időben</span>
+          </div>
+          <p class="card-desc">Szinte senki sem ismeri — a Bükki Nemzeti Park eldugott kis ékköve. Csendes völgyi tanösvény, erdei hangulat, patak mellett. 3 állomás. Tökéletes "meglepetés" program.</p>
+          <div class="card-detail">
+            <div class="card-detail-row">
+              <span class="detail-label">Nehézség</span>
+              <span>Séta jellegű, mindenki tudja</span>
+            </div>
+            <div class="card-detail-row">
+              <span class="detail-label">Belépő</span>
+              <span>Ingyenes</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WELLNESS ÖSSZEFOGLALÓ -->
+  <section class="section" id="wellness">
+    <div class="container">
+      <h2 class="section-title">Wellness térkép</h2>
+      <p class="section-sub">Távolság szerint — mindegyik esős napra is kitűnő</p>
+      <div class="wellness-table-wrap">
+        <table class="wellness-table">
+          <thead>
+            <tr>
+              <th>Helyszín</th>
+              <th>Km</th>
+              <th>Kiemelő</th>
+              <th>SZÉP kártya</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Bogácsi Termálfürdő</strong></td>
+              <td>35 km</td>
+              <td>Termál, gyógymedence, szauna, masszázs</td>
+              <td>✓</td>
+            </tr>
+            <tr>
+              <td><strong>Miskolc-Tapolca Barlangfürdő</strong></td>
+              <td>38 km</td>
+              <td>Egyedülálló barlangos medence, 30°C</td>
+              <td>✓</td>
+            </tr>
+            <tr>
+              <td><strong>Hotel Palota Lillafüred</strong></td>
+              <td>45 km</td>
+              <td>Szállodai spa, úszómedence, sókamra</td>
+              <td>✓</td>
+            </tr>
+            <tr>
+              <td><strong>La Contessa – Szilvásvárad</strong></td>
+              <td>45 km</td>
+              <td>Kastélyos, jakuzzi, gőzkamra, hammam</td>
+              <td>✓</td>
+            </tr>
+            <tr>
+              <td><strong>Bambara Hotel – Felsőtárkány</strong></td>
+              <td>55 km</td>
+              <td>Afrikai erdei hotel, 3 medence, szurikáta</td>
+              <td>✓</td>
+            </tr>
+            <tr>
+              <td><strong>Saliris Resort – Egerszalók</strong></td>
+              <td>65 km</td>
+              <td>Travertino-dombok, termál, egész napos</td>
+              <td>✓</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- TÚRÁK -->
+  <section class="section section-alt" id="tura">
+    <div class="container">
+      <h2 class="section-title">Erdős, kevéssé ismert túrák</h2>
+      <p class="section-sub">Csendes, szép útvonalak – a Bükkben sokan nem ismerik ezeket</p>
+      <div class="hike-list">
+        <div class="hike-item">
+          <div class="hike-icon">🦎</div>
+          <div class="hike-body">
+            <h4>Szalamandra tanösvény</h4>
+            <p>Lázbérci tó · 6 km · 200 m szint · Könnyű · Helyi</p>
+          </div>
+          <div class="hike-tag">Helyi</div>
+        </div>
+        <div class="hike-item">
+          <div class="hike-icon">🌿</div>
+          <div class="hike-body">
+            <h4>Csondró-völgy (Tardona–Mályinka)</h4>
+            <p>Szurdok, vízesések · 10 km · 350 m · Könnyű–közepes · 15 km</p>
+          </div>
+          <div class="hike-tag hike-tag-amber">Rejtett kincs</div>
+        </div>
+        <div class="hike-item">
+          <div class="hike-icon">🗻</div>
+          <div class="hike-body">
+            <h4>Begyeleg-kilátó (Mályinka)</h4>
+            <p>Panoráma a Bán-völgyre és a tározóra · Rövid séta · 5 km</p>
+          </div>
+          <div class="hike-tag hike-tag-amber">Rejtett kincs</div>
+        </div>
+        <div class="hike-item">
+          <div class="hike-icon">🌾</div>
+          <div class="hike-body">
+            <h4>Répás-völgyi tanösvény (Domaháza)</h4>
+            <p>Séta jellegű, völgyi · 2,3 km · Szinte ismeretlen · 30 km</p>
+          </div>
+          <div class="hike-tag hike-tag-amber">Rejtett kincs</div>
+        </div>
+        <div class="hike-item">
+          <div class="hike-icon">🌲</div>
+          <div class="hike-body">
+            <h4>Rejteki tanösvény (Répáshuta)</h4>
+            <p>Bükkerdő, tisztások · 1,8–11,9 km · Eldugott bükki kis falu · 50 km</p>
+          </div>
+          <div class="hike-tag hike-tag-amber">Rejtett kincs</div>
+        </div>
+        <div class="hike-item">
+          <div class="hike-icon">🐗</div>
+          <div class="hike-body">
+            <h4>Répáshuta – Vadász Étterem & Erdei séta</h4>
+            <p>Gasztró-túra · Étkezés: Vadmalacsült, Sztrapacska · 50 km</p>
+          </div>
+          <div class="hike-tag">Gasztró</div>
+        </div>
+        <div class="hike-item">
+          <div class="hike-icon">🏰</div>
+          <div class="hike-body">
+            <h4>Cserépváraljai várrom + Kő-völgy</h4>
+            <p>Tufaszikla, barlanglakások, kaptárkövek · 1,4–10 km · 55 km</p>
+          </div>
+          <div class="hike-tag">Különleges</div>
+        </div>
+        <div class="hike-item">
+          <div class="hike-icon">🏞️</div>
+          <div class="hike-body">
+            <h4>Hór-völgy körtúra (Cserépfalu)</h4>
+            <p>Erdős, patakos, csendes · 4,45 km · 100 m · Könnyű · 55 km</p>
+          </div>
+          <div class="hike-tag">Csendes</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+      <h2 class="section-title">Gasztro-élmények 2026 tavasz</h2>
+      <p class="section-sub">Frissített étlapok és helyi specialitások a túrák környékén</p>
+      
+      <div class="restaurant-grid-v2">
+        
+        <!-- RESTAURANT 1: Aranykehely -->
+        <article class="restaurant-card-v2">
+          <div class="rest-image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <path d="M12 2L15 8H9L12 2Z M5 22H19 M7 22V11C7 9 9 7 12 7C15 7 17 9 17 11V22 M12 12V17" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="rest-content">
+            <div class="rest-header">
+              <div>
+                <span class="rest-location-tag">Dédestapolcsány</span>
+                <h4 class="rest-title">Aranykehely Fogadó</h4>
+              </div>
+              <span class="menu-year-badge">2026 Spring</span>
+            </div>
+            <p class="rest-desc">Hagyományos falusi vendéglátás a tó partján. Az egyik legfontosabb gasztro-megálló a környéken.</p>
+            <div class="rest-specialties">
+              <span class="specialty-item">🦌 Szarvaspörkölt</span>
+              <span class="specialty-item">🥩 Dédi töltött szelet</span>
+              <span class="specialty-item">🥟 Házi galuska</span>
+            </div>
+            <div class="rest-footer">
+              <span class="rest-tour-link">Lázbérci tó / Szalamandra túra</span>
+              <a href="#" class="btn-menu">Étlap szemle</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- RESTAURANT 2: Répáshuta Vadász -->
+        <article class="restaurant-card-v2">
+          <div class="rest-image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <path d="M12 3L4 9V21H20V9L12 3Z M12 12V15 M9 15H15" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="8" r="1.5" />
+            </svg>
+          </div>
+          <div class="rest-content">
+            <div class="rest-header">
+              <div>
+                <span class="rest-location-tag">Répáshuta</span>
+                <h4 class="rest-title">Vadász Étterem</h4>
+              </div>
+              <span class="menu-year-badge">2026 New</span>
+            </div>
+            <p class="rest-desc">A Bükk mélyén, az erdő közepén. Vadételeiről és a híres „hutai” sztrapacskáról ismert.</p>
+            <div class="rest-specialties">
+              <span class="specialty-item">🐗 Vaddisznósült</span>
+              <span class="specialty-item">🧀 Sztrapacska</span>
+              <span class="specialty-item">🍄 Erdei gombaleves</span>
+            </div>
+            <div class="rest-footer">
+              <span class="rest-tour-link">Rejteki tanösvény / Bükki erdő</span>
+              <a href="https://vadaszetterem.hu" target="_blank" class="btn-menu">Étlap</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- RESTAURANT 3: Szilvásvárad Szalajka -->
+        <article class="restaurant-card-v2">
+          <div class="rest-image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <path d="M2 12C2 12 5 7 12 7C19 7 22 12 22 12C22 12 19 17 12 17C5 17 2 12 2 12Z" stroke-linecap="round"/>
+              <path d="M12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="rest-content">
+            <div class="rest-header">
+              <div>
+                <span class="rest-location-tag">Szilvásvárad</span>
+                <h4 class="rest-title">Szalajka Fogadó</h4>
+              </div>
+              <span class="menu-year-badge">2026 Fresh</span>
+            </div>
+            <p class="rest-desc">A Szalajka-völgy bejáratánál. Specialitásuk a helyi pisztráng és a vadmalac.</p>
+            <div class="rest-specialties">
+              <span class="specialty-item">🐟 Fokhagymás pisztráng</span>
+              <span class="specialty-item">🦌 Vadragu leves</span>
+              <span class="specialty-item">🍰 Somlói galuska</span>
+            </div>
+            <div class="rest-footer">
+              <span class="rest-tour-link">Szalajka-völgy / Vízesés</span>
+              <a href="https://szalajkafogado.hu" target="_blank" class="btn-menu">Étlap</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- RESTAURANT 4: Lillafüred Pisztrángos -->
+        <article class="restaurant-card-v2">
+          <div class="rest-image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <path d="M7 2L17 2L21 8L12 22L3 8L7 2Z" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="rest-content">
+            <div class="rest-header">
+              <div>
+                <span class="rest-location-tag">Lillafüred</span>
+                <h4 class="rest-title">Vendéglő a Pisztrángoshoz</h4>
+              </div>
+              <span class="menu-year-badge">2026 Hot</span>
+            </div>
+            <p class="rest-desc">A Garadna-völgyben található autentikus halsütöde és étterem. Füstölt finomságok.</p>
+            <div class="rest-specialties">
+              <span class="specialty-item">🔥 Füstölt pisztráng</span>
+              <span class="specialty-item">🍞 Kovászos kenyér</span>
+              <span class="specialty-item">🥗 Friss kerti saláta</span>
+            </div>
+            <div class="rest-footer">
+              <span class="rest-tour-link">Lillafüred barlang / Kisvasút</span>
+              <a href="#" class="btn-menu">Étlap</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- RESTAURANT 5: Kazincbarcika HBH -->
+        <article class="restaurant-card-v2">
+          <div class="rest-image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <rect x="6" y="3" width="12" height="18" rx="2" stroke-linecap="round"/>
+              <path d="M18 7H20C21.1046 7 22 7.89543 22 9V11C22 12.1046 21.1046 13 20 13H18" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="rest-content">
+            <div class="rest-header">
+              <div>
+                <span class="rest-location-tag">Kazincbarcika</span>
+                <h4 class="rest-title">HBH Bajor Sörház</h4>
+              </div>
+              <span class="menu-year-badge">2026 Classic</span>
+            </div>
+            <p class="rest-desc">Kiadós bajor és magyar tálak, saját kézműves sörökkel kísérve.</p>
+            <div class="rest-specialties">
+              <span class="specialty-item">🥨 Bajor csülöktál</span>
+              <span class="specialty-item">🍺 HBH sörpörkölt</span>
+              <span class="specialty-item">🍖 Rántott szelet</span>
+            </div>
+            <div class="rest-footer">
+              <span class="rest-tour-link">Uppony / Bükki elágazás</span>
+              <a href="https://hbhetterem.hu" target="_blank" class="btn-menu">Étlap</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- RESTAURANT 6: Miskolctapolca Kemencés -->
+        <article class="restaurant-card-v2">
+          <div class="rest-image-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <path d="M17 18V21M7 18V21" stroke-linecap="round"/>
+              <path d="M4 14C4 9.58172 7.58172 6 12 6C16.4183 6 20 9.58172 20 14V18H4V14Z" stroke-linecap="round"/>
+              <path d="M9 11C9 11 10 10 12 10C14 10 15 11 15 11" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="rest-content">
+            <div class="rest-header">
+              <div>
+                <span class="rest-location-tag">Miskolctapolca</span>
+                <h4 class="rest-title">Kemencés Kisvendéglő</h4>
+              </div>
+              <span class="menu-year-badge">2026 Top</span>
+            </div>
+            <p class="rest-desc">Hagyományos kemencés ételek, családias hangulat a Barlangfürdő közelében.</p>
+            <div class="rest-specialties">
+              <span class="specialty-item">🔥 Kemencés csülök</span>
+              <span class="specialty-item">🥄 Tejfölös bableves</span>
+              <span class="specialty-item">🥧 Túrós lepény</span>
+            </div>
+            <div class="rest-footer">
+              <span class="rest-tour-link">Barlangfürdő wellness</span>
+              <a href="#" class="btn-menu">Étlap</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+  <!-- HASZNOS APRÓSÁGOK -->
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">Hasznos apróságok</h2>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <div class="tip-icon">🌡️</div>
+          <h4>Időjárás</h4>
+          <a href="https://www.idokep.hu/elorejelzes/Kazincbarcika" target="_blank">idokep.hu → Kazincbarcika</a>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🗺️</div>
+          <h4>Offline térkép</h4>
+          <p>Locus Map vagy HuKi app — töltsd le a Bükk térképet előre!</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">💳</div>
+          <h4>SZÉP kártya</h4>
+          <p>Bogács, Barlangfürdő és a legtöbb wellness elfogadja.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">👟</div>
+          <h4>Felszerelés</h4>
+          <p>Vízálló bakancs, esőkabát minden napra, meleg pulóver reggelre.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🏕️</div>
+          <h4>Bükki Nemzeti Park</h4>
+          <a href="https://www.bnpi.hu" target="_blank">bnpi.hu – Túrák és tanösvények</a>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🚗</div>
+          <h4>Benzinkút</h4>
+          <p>Kazincbarcika és Ózd között több töltőállomás is van.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>Borsodi Szünidő · Április 2026 · Kazincbarcika & Dédestapolcsány körzete</p>
+      <p class="footer-sub">Minden program szabadon kombinálható — az időjárás dönt!</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+<script data-pplx-inline-edit>
+(function(){
+  if(window===window.top)return;
+  function inlineAll(orig,clone){
+    if(orig.nodeType!==1)return;
+    try{
+      var cs=getComputedStyle(orig);
+      var t='';
+      for(var i=0;i<cs.length;i++){t+=cs[i]+':'+cs.getPropertyValue(cs[i])+';';}
+      clone.style.cssText=t;
+    }catch(e){}
+    var oc=orig.children,cc=clone.children;
+    for(var j=0;j<oc.length&&j<cc.length;j++){inlineAll(oc[j],cc[j]);}
+  }
+  function stripExternal(clone){
+    var imgs=clone.querySelectorAll('img');
+    for(var i=0;i<imgs.length;i++){
+      var s=imgs[i].getAttribute('src');
+      if(s&&!s.startsWith('data:'))imgs[i].removeAttribute('src');
+    }
+    var all=clone.querySelectorAll('*');
+    for(var i=0;i<all.length;i++){
+      var st=all[i].style.cssText;
+      if(st&&st.indexOf('url(')>=0){
+        all[i].style.cssText=st.replace(/url\(["']?(?!data:)[^)"']*["']?\)/gi,'none');
+      }
+    }
+  }
+  window.addEventListener('message',function(e){
+    if(!e.data||e.data.type!=='INLINE_EDIT_CAPTURE_REQUEST')return;
+    var scrollX=window.scrollX||window.pageXOffset||0;
+    var scrollY=window.scrollY||window.pageYOffset||0;
+    var w=window.innerWidth,h=window.innerHeight;
+    try{
+      var clone=document.documentElement.cloneNode(true);
+      var rm=clone.querySelectorAll('script,link[rel="stylesheet"],style');
+      for(var i=0;i<rm.length;i++){rm[i].remove();}
+      inlineAll(document.documentElement,clone);
+      stripExternal(clone);
+      var html=new XMLSerializer().serializeToString(clone);
+      var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'">'
+        +'<foreignObject width="100%" height="100%">'
+        +'<div xmlns="http://www.w3.org/1999/xhtml" style="width:'+w+'px;height:'+h+'px;overflow:hidden">'
+        +'<div style="transform:translate(-'+scrollX+'px,-'+scrollY+'px);transform-origin:top left">'
+        +html+'</div></div></foreignObject></svg>';
+      var svgUrl='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+      var img=new Image();
+      img.onload=function(){
+        var c=document.createElement('canvas');c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0);
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:c.toDataURL('image/png'),scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.onerror=function(){
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.src=svgUrl;
+    }catch(err){
+      window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+    }
+  });
+})();
+</script></body>
+</html>
