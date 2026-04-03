@@ -57,6 +57,9 @@ fetchWeather();
 // ============ INTERACTIVE MAP ============
 let map;
 function initMap() {
+  const mapContainer = document.getElementById('map');
+  if (!mapContainer) return;
+
   map = L.map('map').setView([48.18, 20.5], 11);
 
   const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -89,7 +92,12 @@ function initMap() {
     L.marker(loc.pos).addTo(map).bindPopup(`<b>${loc.name}</b>`);
   });
 }
-if (document.getElementById('map')) initMap();
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (document.getElementById('map')) initMap();
+  renderFavorites();
+  updateFavButtons();
+});
 
 // ============ KEDVENCEK (LOCALSTORAGE) ============
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
