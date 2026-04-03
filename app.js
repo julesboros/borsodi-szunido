@@ -1,8 +1,17 @@
+// ============ PWA SERVICE WORKER ============
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(reg => console.log('SW registered'))
+      .catch(err => console.log('SW error:', err));
+  });
+}
+
 // ============ DARK MODE TOGGLE ============
 (function () {
   const toggle = document.querySelector('[data-theme-toggle]');
   const root = document.documentElement;
-  let theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  let theme = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
   root.setAttribute('data-theme', theme);
 
   function updateIcon() {
@@ -18,13 +27,133 @@
     toggle.addEventListener('click', () => {
       theme = theme === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
       updateIcon();
     });
   }
 })();
 
+// ============ WEATHER WIDGET ============
+async function fetchWeather() {
+  const lat = 48.2494; // Kazincbarcika
+  const lon = 20.62;
+  try {
+    const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+    const data = await res.json();
+    if (data.current_weather) {
+      document.getElementById('weather-temp').innerText = Math.round(data.current_weather.temperature) + '°C';
+      const code = data.current_weather.weathercode;
+      let icon = '☀️';
+      if (code > 0) icon = '⛅';
+      if (code > 40) icon = '🌧️';
+      document.getElementById('weather-icon').innerText = icon;
+    }
+  } catch (e) {
+    console.log('Weather fetch error');
+  }
+}
+fetchWeather();
 
-// ============ PROGRAM SZŰRÉS ============
+// ============ INTERACTIVE MAP ============
+let map;
+function initMap() {
+  map = L.map('map').setView([48.18, 20.5], 11);
+
+  const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+  });
+
+  const baseMaps = {
+    "Térkép": osm,
+    "Műhold": satellite
+  };
+
+  L.control.layers(baseMaps).addTo(map);
+
+  const locations = [
+    { name: "Dédestapolcsány (Lázbérc)", pos: [48.1873, 20.4851], type: "base" },
+    { name: "Dédesi vár", pos: [48.163, 20.478], type: "hike" },
+    { name: "Uppony-szoros", pos: [48.2198, 20.4447], type: "hike" },
+    { name: "Szilvásvárad", pos: [48.1026, 20.3891], type: "hike" },
+    { name: "Lillafüred", pos: [48.1018, 20.6231], type: "hike" },
+    { name: "Miskolctapolca", pos: [48.074, 20.744], type: "wellness" },
+    { name: "Bogács", pos: [47.905, 20.531], type: "wellness" },
+    { name: "Kazincbarcika", pos: [48.2494, 20.62], type: "city" }
+  ];
+
+  locations.forEach(loc => {
+    L.marker(loc.pos).addTo(map).bindPopup(`<b>${loc.name}</b>`);
+  });
+}
+if (document.getElementById('map')) initMap();
+
+// ============ KEDVENCEK (LOCALSTORAGE) ============
+let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+function toggleFavorite(id) {
+  const idx = favorites.indexOf(id);
+  if (idx > -1) {
+    favorites.splice(idx, 1);
+  } else {
+    favorites.push(id);
+  }
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+  updateFavButtons();
+  renderFavorites();
+}
+
+function updateFavButtons() {
+  document.querySelectorAll('.btn-save').forEach(btn => {
+    const id = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+    if (favorites.includes(id)) {
+      btn.classList.add('active');
+      btn.innerHTML = '⭐ Mentve';
+    } else {
+      btn.classList.remove('active');
+      btn.innerHTML = '⭐ Mentés';
+    }
+  });
+}
+
+function renderFavorites() {
+  const container = document.getElementById('favoritesGrid');
+  const navBtn = document.getElementById('navKedvencek');
+  const section = document.getElementById('kedvencek');
+
+  if (favorites.length === 0) {
+    section.style.display = 'none';
+    navBtn.style.fontWeight = 'normal';
+    return;
+  }
+
+  section.style.display = 'block';
+  navBtn.style.fontWeight = 'bold';
+  container.innerHTML = '';
+
+  favorites.forEach(id => {
+    // Keresés az eredeti kártyák között (egyszerűsített demo megoldás)
+    const original = document.querySelector(`.card .btn-save[onclick*="${id}"]`)?.closest('.card');
+    if (original) {
+      const clone = original.cloneNode(true);
+      // Eltávolítunk minden gombot a klónból, kivéve a törlést
+      clone.querySelectorAll('button, .card-link').forEach(el => el.remove());
+      const removeBtn = document.createElement('button');
+      removeBtn.className = 'btn-save active';
+      removeBtn.innerHTML = '🗑 Eltávolítás';
+      removeBtn.onclick = () => toggleFavorite(id);
+      clone.appendChild(removeBtn);
+      container.appendChild(clone);
+    }
+  });
+}
+renderFavorites();
+updateFavButtons();
+
+// ============ PROGRAM SZŰRÉS + CHECKLIST ============
 const weatherMap = {
   nap: ['nap'],
   valtozekony: ['valtozekony', 'nap'],
@@ -36,6 +165,18 @@ const weatherMap = {
 function filterCards(filter) {
   const cards = document.querySelectorAll('#cardsGrid .card');
   const resetBtn = document.getElementById('filterReset');
+  const checklistItems = document.querySelectorAll('#packingList li');
+
+  // Checklist szűrés
+  checklistItems.forEach(li => {
+    const tag = li.getAttribute('data-weather');
+    if (filter === 'osszes' || tag === 'all' || tag === filter) {
+      li.style.opacity = '1';
+      li.style.textDecoration = 'none';
+    } else {
+      li.style.opacity = '0.4';
+    }
+  });
 
   if (filter === 'osszes' || !weatherMap[filter]) {
     cards.forEach(c => c.classList.remove('hidden'));
@@ -44,64 +185,34 @@ function filterCards(filter) {
   }
 
   const allowed = weatherMap[filter];
-  let shown = 0;
-
   cards.forEach(card => {
     const tags = (card.getAttribute('data-weather') || '').split(' ');
     const match = tags.some(t => allowed.includes(t));
-    if (match) {
-      card.classList.remove('hidden');
-      shown++;
-    } else {
-      card.classList.add('hidden');
-    }
+    card.classList.toggle('hidden', !match);
   });
 
   resetBtn.style.display = 'block';
-
-  // Scroll a kártyákhoz
   setTimeout(() => {
     document.getElementById('programok').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 100);
 }
 
-
 // ============ SMOOTH HOVER CARDS ============
 document.querySelectorAll('.card').forEach(card => {
-  card.addEventListener('mouseenter', () => {
-    card.style.willChange = 'transform, box-shadow';
-  });
-  card.addEventListener('mouseleave', () => {
-    card.style.willChange = 'auto';
-  });
+  card.addEventListener('mouseenter', () => card.style.willChange = 'transform, box-shadow');
+  card.addEventListener('mouseleave', () => card.style.willChange = 'auto');
 });
-
 
 // ============ ACTIVE NAV HIGHLIGHT ============
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.jump-nav a');
-
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       navLinks.forEach(link => {
-        link.style.color = '';
-        if (link.getAttribute('href') === '#' + entry.target.id) {
-          link.style.color = 'var(--color-primary)';
-        }
+        link.style.color = link.getAttribute('href') === '#' + entry.target.id ? 'var(--color-primary)' : '';
       });
     }
   });
 }, { threshold: 0.3, rootMargin: '-80px 0px 0px 0px' });
-
 sections.forEach(s => observer.observe(s));
-
-
-// ============ DECISION CARDS HIGHLIGHT ============
-document.querySelectorAll('.decision-card').forEach(card => {
-  card.addEventListener('click', () => {
-    document.querySelectorAll('.decision-card').forEach(c => c.style.borderColor = '');
-    card.style.borderColor = 'var(--color-primary)';
-    card.style.boxShadow = 'var(--shadow-md)';
-  });
-});
